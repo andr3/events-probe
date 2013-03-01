@@ -1,0 +1,50 @@
+.events span,
+button {
+    border: 0;
+    background: white;
+    border: 1px solid white;
+    padding: 0.3em 1.5em;
+    font-size: 1.1em;
+
+}
+
+.events {
+    line-height: 2;
+    padding-bottom: 1em;
+    border-bottom: 1px solid #ddd;
+    margin: 0.3em;
+}
+.events strong {
+    display: block;
+}
+.events .on {
+    background-color: red;
+    color: white;
+    text-shadow: 1px 1px 0px rgba(100,0,0, 0.5);
+
+    -webkit-transition: none;
+       -moz-transition: none;
+        -ms-transition: none;
+         -o-transition: none;
+            transition: none;
+}
+.on {
+    background-color: red;
+    color: black;
+    border-color: red;
+
+    -webkit-transition: background-color 2s;
+       -moz-transition: background-color 2s;
+        -ms-transition: background-color 2s;
+         -o-transition: background-color 2s;
+            transition: background-color 2s;
+}
+
+
+
+
+header,
+main {
+    display: block;
+    padding: 1em;
+}

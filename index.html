@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Generic Probe</title>
+
+        <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0">
+
+        <link rel="stylesheet" href="css/base.css">
+        <link rel="stylesheet" href="css/generic.css">
+        <link rel="stylesheet" href="css/events.css">
+
+        <script src="http://js.sapo.pt/SAPO/"></script>
+        <script src="http://js.sapo.pt/SAPO/Dom/Element/"></script>
+        <script src="http://js.sapo.pt/SAPO/Dom/Event/"></script>
+        <script src="http://js.sapo.pt/SAPO/Dom/Loaded/"></script>
+    </head>
+    <body>
+        <noscript><p>Sorry, this probe uses javascript. Please enable it, if possible.</p></noscript>
+
+        <p><a id="probe">
+            (#probe)
+        </a></p>
+
+        <header>
+            <h1>Events probe</h1>
+
+            <p>This is a demo, observing events fired in the probe and letting you
+            know by lighting up the buttons down there.</p>
+
+            <h2>Instructions</h2>
+            <p>Click / Tap / Drag / Swipe the probe
+            element (the box on top).</p>
+        </header>
+
+        <main>
+            <h2>Events supported in your browser</h2>
+            <p class="events"><span id="mouseevents">Mouse</span> <span id="touchevents">Touch</span> <span id="pointerevents">Pointer</span> (IE10)
+            <small>Not yet tracking Pointer events, just detecting.</small></p>
+
+            <h2>Live panel</h2>
+
+            <p><button id="mousedown">Mouse Down</button> <button id="mouseup">Mouse Up</button> <button id="mousemove">Mouse Move</button></p>
+
+            <p><button id="touchstart">Touch Start</button> <button id="touchend">Touch End</button> <button id="touchmove">Touch Move</button></p>
+
+            <p><button id="click">Click</button></p>
+
+
+
+
+    <footer>
+        <p>Probe put together by 
+            <span class="vcard"><a class="url fn" href="http://id.andr3.net">andr3</a></span>.</p>
+    </footer>
+
+<script>
+    var gotOne = function (ev,which) {
+       var el = document.getElementById(which);
+       el.className='on'; 
+       setTimeout(function (which) {
+            
+           var el = document.getElementById(which);
+            el.className='';
+
+       }.bindObj(this, which), 500);
+    };
+
+    SAPO.Dom.Event.observe(document, 'dom:loaded', function () {
+        
+        var probe = document.getElementById('probe');
+        var lst = ['click', 'mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove'];
+
+        for(var i=0,len=lst.length;i<len;i++) {
+            SAPO.Dom.Event.observe(probe, lst[i], gotOne.bindObjEvent(this, lst[i]));
+        }
+
+        // Detect schemes available
+        var els = [ document.getElementById('mouseevents'), document.getElementById('touchevents'), document.getElementById('pointerevents') ];
+        if (els[0] && 'onmousedown' in window) { els[0].className='on'; }
+        if (els[1] && 'ontouchstart' in window) { els[1].className='on'; }
+        if (els[2] && window.navigator.msPointerEnabled) { els[2].className='on'; }
+
+
+    });
+
+    // Patching DomLoaded (new) to old model
+    SAPO.Dom.Loaded.run( window, function () {
+
+        try {
+            // Try faking old custom event
+            SAPO.Dom.Event.fire (document, 'dom:loaded');
+
+        } catch (e) {}        
+
+    });
+
+</script>
+
+    </body>
+</html>
